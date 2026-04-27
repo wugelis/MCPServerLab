@@ -1,25 +1,26 @@
-﻿// See https://aka.ms/new-console-template for more information  
-using System;
-using ModelContextProtocol;
-using ModelContextProtocol.Server;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Server;
+using System.ComponentModel;
 
-var builder = Host.CreateEmptyApplicationBuilder(settings: null);
+var builder = Host.CreateApplicationBuilder(args);
+builder.Logging.AddConsole(options =>
+{
+    options.LogToStandardErrorThreshold = LogLevel.Trace;
+});
 
 builder.Services
    .AddMcpServer()
    .WithStdioServerTransport()
-   .WithTools<HelloWorldToolInstance>();
+   .WithToolsFromAssembly();
 
 await builder.Build().RunAsync();
 
 [McpServerToolType]
-public class HelloWorldToolInstance
+public static class HelloWorldToolInstance
 {
     [McpServerTool, Description("Hello World Tool")]
-    public string GetYourCityName(string city) =>
-        $"Hello! Wellcome to {city}!";
+    public static string GetYourCityName(string city) =>
+        $"Hello! Welcome to {city}!";
 }
