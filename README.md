@@ -15,7 +15,7 @@
 
 1. 確保已安裝以下工具：
     - Visual Studio 或其他 C# 開發環境
-    - .NET 8 或更新版本的 SDK
+    - .NET 9 或更新版本的 SDK
 2. Clone 本 repository 至本地環境：
     ```bash
     git clone <repository-url>
@@ -28,7 +28,7 @@
 
 1. 開啟專案目錄，並執行以下命令以新增必要的 NuGet 套件：
     ```bash
-    dotnet add package ModelContextProtocol --version 0.1.0-preview.11
+    dotnet add package ModelContextProtocol --version 1.2.0
     dotnet add package Microsoft.Extensions.Hosting
     ```
 
@@ -38,15 +38,14 @@
 
 ## 建立 MCP 客戶端
 
-1. 新增一個類別檔案 `HelloWorldToolInstance.cs`。
-2. 實現 MCP 客戶端的基本結構：
+1. 在 `Program.cs` 中實現 MCP 伺服器的基本結構：
     ```csharp
     [McpServerToolType]
-    public class HelloWorldToolInstance
+    public static class HelloWorldToolInstance
     {
         [McpServerTool, Description("Hello World Tool")]
-        public string GetYourCityName(string city) =>
-            $"Hello! Wellcome to {city}!";
+        public static string GetYourCityName(string city) =>
+            $"Hello! Welcome to {city}!";
     }
     ```
 
